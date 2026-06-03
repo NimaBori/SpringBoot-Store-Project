@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: store
+stripe:
+  apiUrl: https://api.stripe.com
+  enabled: true
+  timeout: 3000
+  supportedCurrencies: USD,EUR,GBP
+paypal:
+  apiUrl: https://api.paypal.com
+  enabled: true
+  timeout: 3000
+  supportedCurrencies: USD,EUR,GBP
+email:
+  serviceUrl: https://api.emailservice.com
+  host: smtp.example.com
+  port: 587
+notification:
+  serviceUrl: https://api.notificationservice.com
+sms:
+  serviceUrl: https://api.smsservice.com
+payment-service: paypal
