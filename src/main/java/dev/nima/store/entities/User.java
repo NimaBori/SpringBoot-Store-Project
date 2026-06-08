@@ -23,6 +23,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Represents a registered user in the store.
+ * Acts as a central entity with various relationships (Address, Tag, Profile).
+ */
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,40 +36,68 @@ import lombok.ToString;
 @Entity
 @Table(name = "users")
 public class User {
+  /**
+   * Unique identifier for the user.
+   */
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
 
+  /**
+   * Full name of the user.
+   */
   @Column(name = "name")
   private String name;
 
+  /**
+   * Unique email address used for login and notifications.
+   */
   @Column(name = "email")
   private String email;
 
+  /**
+   * Encrypted password for user authentication.
+   */
   @Column(name = "password")
   private String password;
 
+  /**
+   * List of addresses associated with this user.
+   */
   @OneToMany(mappedBy = "user")
   @Builder.Default
+  @ToString.Exclude
   private List<Address> addresses = new ArrayList<>();
 
+  /**
+   * Helper method to add an address and maintain bidirectionality.
+   */
   public void addAddress(Address address) {
     addresses.add(address);
     address.setUser(this);
   }
 
+  /**
+   * Helper method to remove an address.
+   */
   public void removeAddress(Address address) {
     addresses.remove(address);
     address.setUser(null);
   }
 
+  /**
+   * Helper method to add a tag by name.
+   */
   public void addTag(String tag) {
     var newTag = new Tag(tag);
     tags.add(newTag);
     newTag.getUsers().add(this);
   }
 
+  /**
+   * Helper method to remove a tag by name.
+   */
   public void removeTag(String tag) {
     var tagToRemove = tags.stream()
         .filter(t -> t.getName().equals(tag))
@@ -77,18 +109,21 @@ public class User {
     }
   }
 
+  /**
+   * Set of tags assigned to this user.
+   * Managed via the user_tags join table.
+   */
   @ManyToMany
-  @JoinTable(name = "user_tags", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+  @JoinTable(name = "user_tags", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
   @Builder.Default
+  @ToString.Exclude
   private Set<Tag> tags = new HashSet<>();
 
+  /**
+   * Extended profile information for the user.
+   */
   @OneToOne(mappedBy = "user")
+  @ToString.Exclude
   private Profile profile;
 
-  // public User(Long id, String name, String email, String password) {
-  // this.id = id;
-  // this.name = name;
-  // this.email = email;
-  // this.password = password;
-  // }
 }

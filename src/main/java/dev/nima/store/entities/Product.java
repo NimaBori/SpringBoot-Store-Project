@@ -17,6 +17,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Represents a product available in the store.
+ * Every product must belong to exactly one category.
+ */
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,18 +30,32 @@ import lombok.ToString;
 @Entity
 @Table(name = "products")
 public class Product {
+    /**
+     * Unique identifier for the product.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
+    /**
+     * The display name of the product.
+     */
     @Column(name = "name")
     private String name;
 
+    /**
+     * The selling price of the product.
+     */
     @Column(name = "price")
     private BigDecimal price;
 
+    /**
+     * The category this product belongs to.
+     * Linked via category_id foreign key.
+     */
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @ToString.Exclude
     private Category category;
 }

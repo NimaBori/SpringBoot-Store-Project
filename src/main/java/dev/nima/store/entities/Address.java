@@ -16,6 +16,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Represents a physical address associated with a user.
+ * Each user can have multiple addresses (One-to-Many relationship).
+ */
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,20 +29,36 @@ import lombok.ToString;
 @Entity
 @Table(name = "addresses")
 public class Address {
+  /**
+   * Primary key for the address.
+   */
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
 
+  /**
+   * Street name and number.
+   */
   @Column(name = "street")
   private String street;
 
+  /**
+   * City where the address is located.
+   */
   @Column(name = "city")
   private String city;
 
+  /**
+   * Postal code for the address.
+   */
   @Column(name = "zip")
   private String zipCode;
 
+  /**
+   * The user who owns this address.
+   * Linked via user_id foreign key.
+   */
   @ManyToOne
   @JoinColumn(name = "user_id")
   @ToString.Exclude
