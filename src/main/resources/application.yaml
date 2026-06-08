@@ -1,6 +1,10 @@
 spring:
   application:
     name: store
+  datasource:
+    url: jdbc:mysql://localhost:3307/store?createDatabaseIfNotExist=true
+    username: root
+    password: 2264
 stripe:
   apiUrl: https://api.stripe.com
   enabled: true
@@ -20,3 +24,4 @@ notification:
 sms:
   serviceUrl: https://api.smsservice.com
 payment-service: paypal
+

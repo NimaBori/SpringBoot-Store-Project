@@ -14,9 +14,11 @@ public class StoreApplication {
 		// var notificationManager = context.getBean(NotificationManager.class);
 		// notificationManager.sendNotification("Your order has been placed
 		// successfully!");
-		var userService = context.getBean(UserService.class);
-		userService.registerUser(new User(null, "John Doe", "john.doe@example.com", null));
-		userService.registerUser(new User(null, "John Doe", "john.doe@example.com", null));
+		// var userService = context.getBean(UserService.class);
+		// userService.registerUser(new User(null, "John Doe", "john.doe@example.com",
+		// null));
+		// userService.registerUser(new User(null, "John Doe", "john.doe@example.com",
+		// null));
 	}
 
 }
