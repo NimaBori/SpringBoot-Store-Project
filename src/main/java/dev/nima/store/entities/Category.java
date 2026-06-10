@@ -1,7 +1,7 @@
 package dev.nima.store.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +23,7 @@ import lombok.ToString;
  * Each category can contain multiple products (One-to-Many relationship).
  */
 @ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -37,6 +39,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
     private Byte id;
 
     /**
@@ -46,12 +49,13 @@ public class Category {
     private String name;
 
     /**
-     * List of products belonging to this category.
+     * Set of products belonging to this category.
+     * Using Set prevents duplicate products within the same category.
      */
     @OneToMany(mappedBy = "category")
     @Builder.Default
     @ToString.Exclude
-    private List<Product> products = new ArrayList<>();
+    private Set<Product> products = new HashSet<>();
 
     /**
      * Helper method to add a product to this category and maintain bidirectionality.
