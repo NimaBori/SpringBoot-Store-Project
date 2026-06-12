@@ -5,6 +5,14 @@ spring:
     url: jdbc:mysql://localhost:3307/store?createDatabaseIfNotExist=true
     username: root
     password: 2264
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
 stripe:
   apiUrl: https://api.stripe.com
   enabled: true
@@ -24,4 +32,3 @@ notification:
 sms:
   serviceUrl: https://api.smsservice.com
 payment-service: paypal
-

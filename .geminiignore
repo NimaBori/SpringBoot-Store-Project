@@ -1,0 +1,27 @@
+# Ignore build artifacts
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Ignore Maven wrapper and internal folders
+.mvn/
+mvnw
+mvnw.cmd
+
+# Ignore IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore version control
+.git/
+
+# Ignore OS specific files
+.DS_Store
+Thumbs.db
+
+# Ignore documentation that doesn't help with coding
+HELP.md
