@@ -120,29 +120,30 @@ public class User {
   private Set<Tag> tags = new HashSet<>();
 
   /**
-   * Set of products in this user's wishlist.
-   * Managed via the wishlist join table.
+   * Set of entries in this user's wishlist.
+   * Managed via the Wishlist entity.
    */
-  @ManyToMany
-  @JoinTable(name = "wishlist", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+  @OneToMany(mappedBy = "user", cascade = jakarta.persistence.CascadeType.ALL, orphanRemoval = true)
   @Builder.Default
   @ToString.Exclude
-  private Set<Product> wishlist = new HashSet<>();
+  private Set<Wishlist> wishlist = new HashSet<>();
 
   /**
-   * Helper method to add a product to the wishlist and maintain bidirectionality.
+   * Helper method to add a product to the wishlist via the Wishlist entity.
    */
   public void addToWishlist(Product product) {
-    wishlist.add(product);
-    product.getWishlistedBy().add(this);
+    Wishlist wishlistItem = Wishlist.builder()
+        .user(this)
+        .product(product)
+        .build();
+    wishlist.add(wishlistItem);
   }
 
   /**
    * Helper method to remove a product from the wishlist.
    */
   public void removeFromWishlist(Product product) {
-    wishlist.remove(product);
-    product.getWishlistedBy().remove(this);
+    wishlist.removeIf(item -> item.getProduct().equals(product));
   }
 
   /**

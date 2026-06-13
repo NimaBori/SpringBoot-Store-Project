@@ -10,8 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -60,16 +60,16 @@ public class Product {
      * The category this product belongs to.
      * Linked via category_id foreign key.
      */
-    @ManyToOne
+    @ManyToOne(cascade = {jakarta.persistence.CascadeType.PERSIST, jakarta.persistence.CascadeType.MERGE}, optional = false)
     @JoinColumn(name = "category_id")
     @ToString.Exclude
     private Category category;
 
     /**
-     * Set of users who have this product in their wishlist.
+     * List of wishlist entries that include this product.
      */
-    @ManyToMany(mappedBy = "wishlist")
+    @OneToMany(mappedBy = "product", cascade = jakarta.persistence.CascadeType.REMOVE)
     @Builder.Default
     @ToString.Exclude
-    private Set<User> wishlistedBy = new HashSet<>();
+    private Set<Wishlist> wishlistedBy = new HashSet<>();
 }
