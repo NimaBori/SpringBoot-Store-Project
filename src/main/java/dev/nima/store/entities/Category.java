@@ -58,7 +58,8 @@ public class Category {
     private Set<Product> products = new HashSet<>();
 
     /**
-     * Helper method to add a product to this category and maintain bidirectionality.
+     * Helper method to add a product to this category and maintain
+     * bidirectionality.
      */
     public void addProduct(Product product) {
         products.add(product);
@@ -71,5 +72,9 @@ public class Category {
     public void removeProduct(Product product) {
         products.remove(product);
         product.setCategory(null);
+    }
+
+    public Category(byte id) {
+        this.id = id;
     }
 }

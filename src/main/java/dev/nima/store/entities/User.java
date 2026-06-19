@@ -137,13 +137,20 @@ public class User {
         .product(product)
         .build();
     wishlist.add(wishlistItem);
+    product.getWishlistedBy().add(wishlistItem);
   }
 
   /**
    * Helper method to remove a product from the wishlist.
    */
   public void removeFromWishlist(Product product) {
-    wishlist.removeIf(item -> item.getProduct().equals(product));
+    wishlist.removeIf(item -> {
+      if (item.getProduct().equals(product)) {
+        product.getWishlistedBy().remove(item);
+        return true;
+      }
+      return false;
+    });
   }
 
   /**

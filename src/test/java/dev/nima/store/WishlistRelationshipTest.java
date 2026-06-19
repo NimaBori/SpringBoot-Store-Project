@@ -25,11 +25,11 @@ class WishlistRelationshipTest {
 
         user.addToWishlist(product);
 
-        assertTrue(user.getWishlist().contains(product));
-        assertTrue(product.getWishlistedBy().contains(user));
+        assertTrue(user.getWishlist().stream().anyMatch(w -> w.getProduct().equals(product)));
+        assertTrue(product.getWishlistedBy().stream().anyMatch(w -> w.getUser().equals(user)));
 
         user.removeFromWishlist(product);
-        assertTrue(!user.getWishlist().contains(product));
-        assertTrue(!product.getWishlistedBy().contains(user));
+        assertTrue(user.getWishlist().stream().noneMatch(w -> w.getProduct().equals(product)));
+        assertTrue(product.getWishlistedBy().stream().noneMatch(w -> w.getUser().equals(user)));
     }
 }
