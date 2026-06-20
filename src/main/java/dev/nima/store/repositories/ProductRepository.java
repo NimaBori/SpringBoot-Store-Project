@@ -3,6 +3,7 @@ package dev.nima.store.repositories;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
@@ -14,7 +15,8 @@ import dev.nima.store.dtos.ProductSummaryDTO;
 import dev.nima.store.entities.Category;
 import dev.nima.store.entities.Product;
 
-public interface ProductRepository extends CrudRepository<Product, Long>, ProductCriteriaRepository {
+public interface ProductRepository
+    extends CrudRepository<Product, Long>, ProductCriteriaRepository, JpaSpecificationExecutor<Product> {
   // String custom query method
   List<Product> findByNameLikeIgnoreCase(String name);
 

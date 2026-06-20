@@ -2,12 +2,15 @@ package dev.nima.store.services;
 
 import java.math.BigDecimal;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dev.nima.store.entities.Category;
+import dev.nima.store.entities.Product;
 import dev.nima.store.repositories.ProductRepository;
 import dev.nima.store.repositories.UserRepository;
+import dev.nima.store.repositories.specifications.ProductSpec;
 
 @Service
 public class UserService {
@@ -39,6 +42,19 @@ public class UserService {
 
     public void fetchProductsByCriteria() {
         var products = productRepository.findProductsByCriteria(null, BigDecimal.valueOf(1), BigDecimal.valueOf(10));
+        products.forEach(product -> System.out.println(product));
+    }
+
+    public void fetchProductsBySpecification(String name, BigDecimal minPrice, BigDecimal maxPrice) {
+        Specification<Product> spec = (root, query, cb) -> cb.conjunction();
+
+        if (name != null) {
+            spec = spec.and(ProductSpec.hasName(name));
+        }
+        if (minPrice != null || maxPrice != null) {
+            spec = spec.and(ProductSpec.hasPriceBetween(minPrice, maxPrice));
+        }
+        var products = productRepository.findAll(spec);
         products.forEach(product -> System.out.println(product));
     }
 }

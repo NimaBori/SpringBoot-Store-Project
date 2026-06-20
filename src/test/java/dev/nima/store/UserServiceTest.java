@@ -63,6 +63,6 @@ public class UserServiceTest {
 
         userService.fetchUser(); // This will print the updated product prices to the console
 
-        userService.fetchProductsByCriteria();
+        userService.fetchProductsBySpecification("Laptop", null, null);
     }
 }
