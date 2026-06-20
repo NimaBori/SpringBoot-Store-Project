@@ -36,4 +36,9 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         System.out.println(user);
     }
+
+    public void fetchProductsByCriteria() {
+        var products = productRepository.findProductsByCriteria(null, BigDecimal.valueOf(1), BigDecimal.valueOf(10));
+        products.forEach(product -> System.out.println(product));
+    }
 }

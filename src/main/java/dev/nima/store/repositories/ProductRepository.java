@@ -14,7 +14,7 @@ import dev.nima.store.dtos.ProductSummaryDTO;
 import dev.nima.store.entities.Category;
 import dev.nima.store.entities.Product;
 
-public interface ProductRepository extends CrudRepository<Product, Long> {
+public interface ProductRepository extends CrudRepository<Product, Long>, ProductCriteriaRepository {
   // String custom query method
   List<Product> findByNameLikeIgnoreCase(String name);
 
@@ -36,7 +36,8 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
   List<Product> findTop5ByNameLikeIgnoreCaseOrderByPriceDesc(String name);
 
   // Find products whose prices are in a given range and sort by name
-  // SQL query calling stored procedure to find products by price range and sort by name
+  // SQL query calling stored procedure to find products by price range and sort
+  // by name
   @Procedure(procedureName = "GetProductsByPriceRange")
   List<Product> findProducts(BigDecimal minPrice, BigDecimal maxPrice);
 
