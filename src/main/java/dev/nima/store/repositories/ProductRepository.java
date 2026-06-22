@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import dev.nima.store.dtos.ProductSummary;
@@ -16,7 +17,8 @@ import dev.nima.store.entities.Category;
 import dev.nima.store.entities.Product;
 
 public interface ProductRepository
-    extends CrudRepository<Product, Long>, ProductCriteriaRepository, JpaSpecificationExecutor<Product> {
+    extends CrudRepository<Product, Long>, ProductCriteriaRepository, JpaSpecificationExecutor<Product>,
+    PagingAndSortingRepository<Product, Long> {
   // String custom query method
   List<Product> findByNameLikeIgnoreCase(String name);
 

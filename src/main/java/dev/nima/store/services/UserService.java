@@ -2,6 +2,9 @@ package dev.nima.store.services;
 
 import java.math.BigDecimal;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,5 +59,18 @@ public class UserService {
         }
         var products = productRepository.findAll(spec);
         products.forEach(product -> System.out.println(product));
+    }
+
+    public void fetchSortedProducts() {
+        Sort sort = Sort.by("name").ascending().and(Sort.by("price").descending());
+        productRepository.findAll(sort).forEach(System.out::println);
+    }
+
+    public void fetchPaginatedProducts(int page, int size) {
+        PageRequest pageable = PageRequest.of(page, size);
+        Page<Product> productPage = productRepository.findAll(pageable);
+        productPage.getContent().forEach(System.out::println);
+        System.out.println("Total pages: " + productPage.getTotalPages());
+        System.out.println("Total elements: " + productPage.getTotalElements());
     }
 }
