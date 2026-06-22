@@ -44,11 +44,11 @@ public class UserService {
     }
 
     public void fetchProductsByCriteria() {
-        var products = productRepository.findProductsByCriteria(null, BigDecimal.valueOf(1), BigDecimal.valueOf(10));
+        var products = productRepository.findProductsByCriteria(null, BigDecimal.valueOf(1), BigDecimal.valueOf(10), null);
         products.forEach(product -> System.out.println(product));
     }
 
-    public void fetchProductsBySpecification(String name, BigDecimal minPrice, BigDecimal maxPrice) {
+    public void fetchProductsBySpecification(String name, BigDecimal minPrice, BigDecimal maxPrice, String categoryName) {
         Specification<Product> spec = (root, query, cb) -> cb.conjunction();
 
         if (name != null) {
@@ -56,6 +56,9 @@ public class UserService {
         }
         if (minPrice != null || maxPrice != null) {
             spec = spec.and(ProductSpec.hasPriceBetween(minPrice, maxPrice));
+        }
+        if (categoryName != null) {
+            spec = spec.and(ProductSpec.hasCategory(categoryName));
         }
         var products = productRepository.findAll(spec);
         products.forEach(product -> System.out.println(product));

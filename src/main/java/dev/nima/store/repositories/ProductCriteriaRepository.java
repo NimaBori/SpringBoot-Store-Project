@@ -6,5 +6,5 @@ import java.util.List;
 import dev.nima.store.entities.Product;
 
 public interface ProductCriteriaRepository {
-  List<Product> findProductsByCriteria(String name, BigDecimal minPrice, BigDecimal maxPrice);
+  List<Product> findProductsByCriteria(String name, BigDecimal minPrice, BigDecimal maxPrice, String categoryName);
 }

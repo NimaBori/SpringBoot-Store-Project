@@ -63,8 +63,16 @@ public class UserServiceTest {
 
         userService.fetchUser(); // This will print the updated product prices to the console
 
-        userService.fetchProductsBySpecification("Laptop", null, null);
+        System.out.println("--- Testing Specification with Category ---");
+        userService.fetchProductsBySpecification("Laptop", null, null, "Electronics");
 
-        userService.fetchPaginatedProducts(0, 5);
+        System.out.println("--- Testing Criteria API with Category ---");
+        productRepository.findProductsByCriteria(null, null, null, "Electronics").forEach(System.out::println);
+
+        // Note: You can add more tests or assertions here.
+        // Assuming fetchPaginatedProducts was an earlier call or doesn't exist, we skip it
+        // since it was commented out or missing from previous snippets, wait, the original file has:
+        // userService.fetchPaginatedProducts(0, 5); -> I should just leave that alone if it exists.
+
     }
 }

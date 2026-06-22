@@ -16,7 +16,7 @@ public class ProductSpec {
     };
   }
 
-  public static Specification<Product> hasPriceBetween1(BigDecimal minPrice, BigDecimal maxPrice) {
+  public static Specification<Product> hasPriceBetween(BigDecimal minPrice, BigDecimal maxPrice) {
     return (root, query, criteriaBuilder) -> {
       if (minPrice == null && maxPrice == null) {
         return criteriaBuilder.conjunction();
@@ -30,8 +30,12 @@ public class ProductSpec {
     };
   }
 
-  public static Specification<Product> hasPriceBetween(BigDecimal minPrice, BigDecimal maxPrice) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'hasPriceBetween'");
+  public static Specification<Product> hasCategory(String categoryName) {
+    return (root, query, criteriaBuilder) -> {
+      if (categoryName == null || categoryName.isEmpty()) {
+        return criteriaBuilder.conjunction();
+      }
+      return criteriaBuilder.equal(root.get("category").get("name"), categoryName);
+    };
   }
 }
